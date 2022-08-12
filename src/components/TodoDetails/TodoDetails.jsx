@@ -31,14 +31,10 @@ function TodoDetails() {
         dispatch(updateTodoInfoAction(id, value))
     }
 
-    function validation(values) {
-        const errors = {};
-
-        if (!values.task.length) {
-            errors.task = 'Field is required';
+    function validateTask(value) {
+        if (!value.length) {
+            return 'Field is required';
         }
-
-        return errors;
     }
 
     return (
@@ -55,13 +51,12 @@ function TodoDetails() {
                 <Formik
                     initialValues={todo}
                     enableReinitialize={true}
-                    onSubmit={onSubmit}
-                    validate={validation}>
+                    onSubmit={onSubmit}>
                     {
                         (formik) => (
                             <Form>
                                 <Field name="task" type="text" value={formik.values.task}
-                                       onChange={formik.handleChange}/>
+                                       onChange={formik.handleChange} validate={validateTask}/>
                                 <Field name="status" type="checkbox" checked={formik.values.status}
                                        onChange={formik.handleChange}/>
                                 <button type="submit"
